@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/presentation/pages/home_page.dart';
 
 void main() {
@@ -13,7 +14,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.white,
+        appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.transparent,
+        ),
+        fontFamily: 'SF Pro Display',
+      ),
       home: const HomePage(),
     );
   }
