@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
+import 'package:weather_app/common/constants.dart';
 import 'package:weather_app/controllers/home_controller.dart';
 import 'package:weather_app/presentation/widgets/weather_card.dart';
 import 'package:weather_app/presentation/widgets/weather_tile.dart';
@@ -57,6 +58,48 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
+  PopupMenuEntry<T> _popUpMenuItem<T>({
+    required String title,
+    T? value,
+    Widget? suffix,
+  }) {
+    return PopupMenuItem<T>(
+      height: 20,
+      value: value,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 4,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          (controller.tempUnit.value == value)
+              ? Icon(
+                  Icons.check_rounded,
+                  size: 18,
+                  color: (controller.isNight.value)
+                      ? AppColors.white
+                      : AppColors.black,
+                )
+              : const SizedBox(width: 18),
+          const Gap(6),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 14,
+              color: (controller.isNight.value)
+                  ? AppColors.white
+                  : AppColors.black,
+              fontWeight: AppFontWeights.medium,
+            ),
+          ),
+          const Spacer(),
+          suffix ?? const SizedBox(),
+        ],
+      ),
+    );
+  }
+
   PreferredSize _appBar() {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60),
@@ -81,17 +124,54 @@ class HomePage extends GetView<HomeController> {
               ),
             ),
             const Spacer(),
-            IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              style: IconButton.styleFrom(
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              onPressed: () {},
-              icon: const Icon(
-                Icons.more_vert_rounded,
-                color: AppColors.white,
-                size: 20,
+            Obx(
+              () => PopupMenuButton(
+                splashRadius: 20,
+                constraints: const BoxConstraints(minWidth: 150),
+                color: (controller.isNight.value)
+                    ? AppColors.darkBlue
+                    : AppColors.white,
+                position: PopupMenuPosition.under,
+                iconColor: AppColors.white,
+                onSelected: (value) {
+                  controller.tempUnit.value = value;
+                },
+                child: const Icon(
+                  Icons.more_vert,
+                  color: AppColors.white,
+                ),
+                itemBuilder: (context) {
+                  return [
+                    _popUpMenuItem<String>(
+                      title: 'Celcius',
+                      value: Constants.celcius,
+                      suffix: Text(
+                        'Cº',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: (controller.isNight.value)
+                              ? AppColors.white
+                              : AppColors.black,
+                          fontWeight: AppFontWeights.semibold,
+                        ),
+                      ),
+                    ),
+                    _popUpMenuItem<String>(
+                      title: 'Fahrenheit',
+                      value: Constants.fahrenheit,
+                      suffix: Text(
+                        'Fº',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: (controller.isNight.value)
+                              ? AppColors.white
+                              : AppColors.black,
+                          fontWeight: AppFontWeights.semibold,
+                        ),
+                      ),
+                    )
+                  ];
+                },
               ),
             ),
           ],
