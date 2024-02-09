@@ -10,18 +10,50 @@ import 'package:weather_app/presentation/widgets/weather_tile.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  AppBar _appBar() {
+    return AppBar(
+      backgroundColor: AppColors.lightBlue,
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/ic_location.svg',
+            width: 18,
+            height: 18,
+            fit: BoxFit.scaleDown,
+            color: AppColors.white,
+          ),
+          const Gap(8),
+          const Text(
+            'Surabaya',
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 16,
+              fontWeight: AppFontWeights.medium,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+            style: IconButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            onPressed: () {},
+            icon: const Icon(
+              Icons.more_vert_rounded,
+              color: AppColors.white,
+              size: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _weatherHeader() {
     return Column(
       children: [
-        const Text(
-          'Surabaya',
-          style: TextStyle(
-            color: AppColors.white,
-            fontSize: 30,
-            fontWeight: AppFontWeights.medium,
-          ),
-        ),
-        const Gap(16),
         SvgPicture.asset(
           'assets/images/sunny.svg',
           fit: BoxFit.scaleDown,
@@ -213,7 +245,7 @@ class HomePage extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 30,
-        vertical: 8,
+        vertical: 12,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
@@ -242,6 +274,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _appBar(),
       body: Stack(
         children: [
           Container(

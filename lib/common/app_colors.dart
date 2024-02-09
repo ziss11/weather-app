@@ -5,5 +5,5 @@ abstract class AppColors {
   static const black = Color(0xFF000000);
   static const darkBlue = Color(0xFF104084);
   static const darkerBlue = Color(0xFF001026);
-  static const lightBlue = Color(0xFF4899E3);
+  static const lightBlue = Color(0xFF2DB0DD);
 }
