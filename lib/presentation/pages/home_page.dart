@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
-import 'package:weather_app/presentation/widgets/parameter_tile.dart';
 import 'package:weather_app/presentation/widgets/weather_card.dart';
 import 'package:weather_app/presentation/widgets/weather_tile.dart';
 
@@ -189,13 +188,53 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget _parameterItem({required Widget icon, required String value}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        icon,
+        const Gap(5),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: AppFontWeights.medium,
+            color: AppColors.white,
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _additionalParameters() {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      children: List.generate(
-        2,
-        (index) => const ParameterTile(),
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 30,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 8,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: AppColors.darkBlue.withOpacity(.2),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _parameterItem(
+            icon: SvgPicture.asset('assets/icons/ic_rain.svg'),
+            value: '6%',
+          ),
+          _parameterItem(
+            icon: SvgPicture.asset('assets/icons/ic_feels_like.svg'),
+            value: '90%',
+          ),
+          _parameterItem(
+            icon: SvgPicture.asset('assets/icons/ic_humidity.svg'),
+            value: '19 km/h',
+          ),
+        ],
       ),
     );
   }
@@ -227,11 +266,11 @@ class HomePage extends StatelessWidget {
                     children: [
                       _weatherHeader(),
                       const Gap(30),
-                      _weatherToday(),
-                      const Gap(20),
-                      _forecastWeather(),
-                      const Gap(20),
                       _additionalParameters(),
+                      const Gap(16),
+                      _weatherToday(),
+                      const Gap(16),
+                      _forecastWeather(),
                     ],
                   ),
                 ),
