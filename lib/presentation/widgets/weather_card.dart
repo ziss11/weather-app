@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_app/common/app_colors.dart';
+import 'package:weather_app/common/app_font_weights.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard({super.key});
@@ -21,6 +22,7 @@ class WeatherCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               color: AppColors.white,
+              fontWeight: AppFontWeights.medium,
             ),
           ),
           SvgPicture.asset(
@@ -32,6 +34,7 @@ class WeatherCard extends StatelessWidget {
           const Text(
             '15.00',
             style: TextStyle(
+              fontWeight: AppFontWeights.medium,
               fontSize: 16,
               color: AppColors.white,
             ),

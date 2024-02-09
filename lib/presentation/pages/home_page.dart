@@ -2,51 +2,100 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
+import 'package:weather_app/controllers/home_controller.dart';
 import 'package:weather_app/presentation/widgets/weather_card.dart';
 import 'package:weather_app/presentation/widgets/weather_tile.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
-  AppBar _appBar() {
-    return AppBar(
-      backgroundColor: AppColors.lightBlue,
-      title: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/icons/ic_location.svg',
-            width: 18,
-            height: 18,
-            fit: BoxFit.scaleDown,
-            color: AppColors.white,
-          ),
-          const Gap(8),
-          const Text(
-            'Surabaya',
-            style: TextStyle(
-              color: AppColors.white,
-              fontSize: 16,
-              fontWeight: AppFontWeights.medium,
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(
+              (controller.isNight.value)
+                  ? 'assets/images/bg_dark.png'
+                  : 'assets/images/bg_light.png',
             ),
           ),
-          const Spacer(),
-          IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            style: IconButton.styleFrom(
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert_rounded,
-              color: AppColors.white,
-              size: 20,
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: _appBar(),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _weatherHeader(),
+                      const Gap(30),
+                      _additionalParameters(),
+                      const Gap(16),
+                      _weatherToday(),
+                      const Gap(16),
+                      _forecastWeather(),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  PreferredSize _appBar() {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(60),
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/ic_location.svg',
+              width: 18,
+              height: 18,
+              fit: BoxFit.scaleDown,
+            ),
+            const Gap(8),
+            const Text(
+              'Surabaya',
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 16,
+                fontWeight: AppFontWeights.medium,
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              style: IconButton.styleFrom(
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              onPressed: () {},
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: AppColors.white,
+                size: 20,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -96,126 +145,169 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+        const Gap(16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Last updated: 16:00',
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 14,
+              ),
+            ),
+            const Gap(4),
+            Obx(
+              () => IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                style: IconButton.styleFrom(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: controller.onRefresh,
+                icon: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.white,
+                    BlendMode.srcATop,
+                  ),
+                  child: Lottie.asset(
+                    'assets/lotties/refresh_icon.json',
+                    animate: controller.isRefresh.value,
+                    width: 22,
+                    height: 22,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
 
   Widget _weatherToday() {
-    return Container(
-      width: Get.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 14,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.darkBlue.withOpacity(.2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Today',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: AppFontWeights.semibold,
+    return Obx(
+      () => Container(
+        width: Get.width,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 14,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: (controller.isNight.value)
+              ? AppColors.darkerBlue.withOpacity(.4)
+              : AppColors.darkBlue.withOpacity(.2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Today',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: AppFontWeights.semibold,
+                    ),
                   ),
-                ),
-                Text(
-                  'Mar, 9',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 14,
+                  Text(
+                    'Mar, 9',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16,
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Divider(
+                color: AppColors.lightBlue,
+              ),
             ),
-            child: Divider(
-              color: AppColors.lightBlue,
+            SizedBox(
+              height: 130,
+              child: ListView.builder(
+                itemCount: 7,
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return const WeatherCard();
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 130,
-            child: ListView.separated(
-              itemCount: 5,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              separatorBuilder: (context, index) => const Gap(11),
-              itemBuilder: (context, index) {
-                return const WeatherCard();
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _forecastWeather() {
-    return Container(
-      width: Get.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.darkBlue.withOpacity(.2),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Text(
-              'Forecast',
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 16,
-                fontWeight: AppFontWeights.semibold,
+    return Obx(
+      () => Container(
+        width: Get.width,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: (controller.isNight.value)
+              ? AppColors.darkerBlue.withOpacity(.4)
+              : AppColors.darkBlue.withOpacity(.2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Text(
+                'Forecast',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 16,
+                  fontWeight: AppFontWeights.semibold,
+                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Divider(
-              color: AppColors.lightBlue,
-            ),
-          ),
-          SizedBox(
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemCount: 5,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              separatorBuilder: (context, index) => const Divider(
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Divider(
                 color: AppColors.lightBlue,
               ),
-              itemBuilder: (context, index) {
-                return const WeatherTile();
-              },
             ),
-          ),
-        ],
+            SizedBox(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: 5,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                separatorBuilder: (context, index) => const Divider(
+                  color: AppColors.lightBlue,
+                ),
+                itemBuilder: (context, index) {
+                  return const WeatherTile();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -239,78 +331,38 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _additionalParameters() {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30,
-        vertical: 12,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        color: AppColors.darkBlue.withOpacity(.2),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _parameterItem(
-            icon: SvgPicture.asset('assets/icons/ic_rain.svg'),
-            value: '6%',
-          ),
-          _parameterItem(
-            icon: SvgPicture.asset('assets/icons/ic_feels_like.svg'),
-            value: '90%',
-          ),
-          _parameterItem(
-            icon: SvgPicture.asset('assets/icons/ic_humidity.svg'),
-            value: '19 km/h',
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(
-                  'assets/images/bg_light.png',
-                ),
-              ),
+    return Obx(
+      () => Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 30,
+          vertical: 12,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: (controller.isNight.value)
+              ? AppColors.darkerBlue.withOpacity(.4)
+              : AppColors.darkBlue.withOpacity(.2),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _parameterItem(
+              icon: SvgPicture.asset('assets/icons/ic_rain.svg'),
+              value: '6%',
             ),
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _weatherHeader(),
-                      const Gap(30),
-                      _additionalParameters(),
-                      const Gap(16),
-                      _weatherToday(),
-                      const Gap(16),
-                      _forecastWeather(),
-                    ],
-                  ),
-                ),
-              ),
+            _parameterItem(
+              icon: SvgPicture.asset('assets/icons/ic_feels_like.svg'),
+              value: '90%',
             ),
-          ),
-        ],
+            _parameterItem(
+              icon: SvgPicture.asset('assets/icons/ic_humidity.svg'),
+              value: '19 km/h',
+            ),
+          ],
+        ),
       ),
     );
   }
