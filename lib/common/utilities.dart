@@ -1,186 +1,97 @@
 abstract class Utilities {
   static DateTime unixToDate(int millisecondsSinceEpoch) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+    return DateTime.fromMillisecondsSinceEpoch(
       millisecondsSinceEpoch * 1000,
     );
-    return dateTime;
   }
 
   static String getWeatherIcon(String desc, [bool isNight = false]) {
     final iconPaths = {
       // Clear
-      'clear sky': isNight
-          ? 'assets/images/clear_night.svg'
-          : 'assets/images/clear_day.svg',
+      'clear sky': isNight ? 'clear_night' : 'clear_day',
 
       // Clouds
-      'few clouds': isNight
-          ? 'assets/images/few_clouds_night.svg'
-          : 'assets/images/few_clouds_day.svg',
-      'scattered clouds': 'assets/images/scattered_clouds.svg',
-      'broken clouds': 'assets/images/broken_clouds.svg',
-      'overcast clouds': 'assets/images/broken_clouds.svg',
+      'few clouds': isNight ? 'few_clouds_night' : 'few_clouds_day',
+      'scattered clouds': 'scattered_clouds',
+      'broken clouds': 'broken_clouds',
+      'overcast clouds': 'broken_clouds',
 
       // Drizzle
-      'light intensity drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'heavy intensity drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'light intensity drizzle rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'drizzle rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'heavy intensity drizzle rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'shower rain and drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'heavy shower rain and drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'shower drizzle': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
+      'light intensity drizzle':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'drizzle': isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'heavy intensity drizzle':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'light intensity drizzle rain':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'drizzle rain': isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'heavy intensity drizzle rain':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'shower rain and drizzle':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'heavy shower rain and drizzle':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'shower drizzle': isNight ? 'shower_rain_night' : 'shower_rain_day',
 
       // Rain
-      'shower rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'light intensity shower rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'heavy intensity shower rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'ragged shower rain': isNight
-          ? 'assets/images/shower_rain_night.svg'
-          : 'assets/images/shower_rain_day.svg',
-      'light rain': isNight
-          ? 'assets/images/light_rain_night.svg'
-          : 'assets/images/light_rain_day.svg',
-      'moderate rain': isNight
-          ? 'assets/images/rain_night.svg'
-          : 'assets/images/rain_day.svg',
-      'heavy intensity rain': isNight
-          ? 'assets/images/rain_night.svg'
-          : 'assets/images/rain_day.svg',
-      'very heavy rain': isNight
-          ? 'assets/images/rain_night.svg'
-          : 'assets/images/rain_day.svg',
-      'extreme rain': isNight
-          ? 'assets/images/rain_night.svg'
-          : 'assets/images/rain_day.svg',
-      'freezing rain': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
+      'shower rain': isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'light intensity shower rain':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'heavy intensity shower rain':
+          isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'ragged shower rain': isNight ? 'shower_rain_night' : 'shower_rain_day',
+      'light rain': isNight ? 'light_rain_night' : 'light_rain_day',
+      'moderate rain': isNight ? 'rain_night' : 'rain_day',
+      'heavy intensity rain': isNight ? 'rain_night' : 'rain_day',
+      'very heavy rain': isNight ? 'rain_night' : 'rain_day',
+      'extreme rain': isNight ? 'rain_night' : 'rain_day',
+      'freezing rain': isNight ? 'snow_night' : 'snow_day',
 
       // Thunderstorm
-      'thunderstorm': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'thunderstorm with light rain': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'thunderstorm with rain': isNight
-          ? 'assets/images/thunder_rain_night.svg'
-          : 'assets/images/thunder_rain_day.svg',
-      'thunderstorm with heavy rain': isNight
-          ? 'assets/images/thunder_rain_night.svg'
-          : 'assets/images/thunder_rain_day.svg',
-      'light thunderstorm': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'heavy thunderstorm': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'ragged thunderstorm': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'thunderstorm with light drizzle': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'thunderstorm with drizzle': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
-      'thunderstorm with heavy drizzle	': isNight
-          ? 'assets/images/thunderstorm_night.svg'
-          : 'assets/images/thunderstorm_day.svg',
+      'thunderstorm': isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'thunderstorm with light rain':
+          isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'thunderstorm with rain':
+          isNight ? 'thunder_rain_night' : 'thunder_rain_day',
+      'thunderstorm with heavy rain':
+          isNight ? 'thunder_rain_night' : 'thunder_rain_day',
+      'light thunderstorm': isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'heavy thunderstorm': isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'ragged thunderstorm':
+          isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'thunderstorm with light drizzle':
+          isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'thunderstorm with drizzle':
+          isNight ? 'thunderstorm_night' : 'thunderstorm_day',
+      'thunderstorm with heavy drizzle	':
+          isNight ? 'thunderstorm_night' : 'thunderstorm_day',
 
       // Snow
-      'snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'light snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'heavy snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'sleet': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'light shower sleet': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'shower sleet': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'light rain and snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'rain and snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'light shower snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'shower snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
-      'heavy shower snow': isNight
-          ? 'assets/images/snow_night.svg'
-          : 'assets/images/snow_day.svg',
+      'snow': isNight ? 'snow_night' : 'snow_day',
+      'light snow': isNight ? 'snow_night' : 'snow_day',
+      'heavy snow': isNight ? 'snow_night' : 'snow_day',
+      'sleet': isNight ? 'snow_night' : 'snow_day',
+      'light shower sleet': isNight ? 'snow_night' : 'snow_day',
+      'shower sleet': isNight ? 'snow_night' : 'snow_day',
+      'light rain and snow': isNight ? 'snow_night' : 'snow_day',
+      'rain and snow': isNight ? 'snow_night' : 'snow_day',
+      'light shower snow': isNight ? 'snow_night' : 'snow_day',
+      'shower snow': isNight ? 'snow_night' : 'snow_day',
+      'heavy shower snow': isNight ? 'snow_night' : 'snow_day',
 
       // Atmosphere
-      'mist': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'smoke': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'haze': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'sand/dust whirls': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'fog': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'sand': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'dust': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'volcanic ash': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'squalls': isNight
-          ? 'assets/images/mist_night.svg'
-          : 'assets/images/mist_day.svg',
-      'tornado':
-          isNight ? 'assets/images/tornado.svg' : 'assets/images/tornado.svg',
+      'mist': isNight ? 'mist_night' : 'mist_day',
+      'smoke': isNight ? 'mist_night' : 'mist_day',
+      'haze': isNight ? 'mist_night' : 'mist_day',
+      'sand/dust whirls': isNight ? 'mist_night' : 'mist_day',
+      'fog': isNight ? 'mist_night' : 'mist_day',
+      'sand': isNight ? 'mist_night' : 'mist_day',
+      'dust': isNight ? 'mist_night' : 'mist_day',
+      'volcanic ash': isNight ? 'mist_night' : 'mist_day',
+      'squalls': isNight ? 'mist_night' : 'mist_day',
+      'tornado': isNight ? 'tornado' : 'tornado',
     };
 
-    return iconPaths[desc] ?? '';
+    return 'assets/images/${iconPaths[desc] ?? ''}.svg';
   }
 }

@@ -387,12 +387,14 @@ class HomePage extends GetView<HomeController> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
               child: Divider(
-                color: AppColors.lightBlue,
+                color: (controller.isNight.value)
+                    ? AppColors.lightBlue.withOpacity(.1)
+                    : AppColors.lightBlue.withOpacity(.6),
               ),
             ),
             SizedBox(
@@ -443,12 +445,14 @@ class HomePage extends GetView<HomeController> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
               child: Divider(
-                color: AppColors.lightBlue,
+                color: (controller.isNight.value)
+                    ? AppColors.lightBlue.withOpacity(.1)
+                    : AppColors.lightBlue.withOpacity(.6),
               ),
             ),
             SizedBox(
@@ -457,8 +461,10 @@ class HomePage extends GetView<HomeController> {
                 itemCount: weathers.length,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
-                separatorBuilder: (context, index) => const Divider(
-                  color: AppColors.lightBlue,
+                separatorBuilder: (context, index) => Divider(
+                  color: (controller.isNight.value)
+                      ? AppColors.lightBlue.withOpacity(.1)
+                      : AppColors.lightBlue.withOpacity(.6),
                 ),
                 itemBuilder: (context, index) {
                   final weather = weathers[index];
