@@ -1,16 +1,46 @@
-# weather_app
+# Weather App
 
-A new Flutter project.
+This guide provides step-by-step instructions for setting up and running a Flutter app on different platforms.
 
-## Getting Started
+## Prerequisites
 
-This project is a starting point for a Flutter application.
+Before running a Flutter app, ensure that you have the following prerequisites installed:
 
-A few resources to get you started if this is your first Flutter project:
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) installed on your machine.
+- Flutter-compatible IDE such as Visual Studio Code, Android Studio, or IntelliJ IDEA.
+- Device emulator or physical device for testing the app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Steps to Run the App
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the Repository
+   Clone the Flutter app repository from a version control system or download the source code from a package manager.
+
+   ```
+   git clone https://github.com/ziss11/weather-app.git
+   ```
+
+2. Navigate to the Project Directory
+   Use the command line to navigate to the root directory of your Flutter project.
+
+   ```
+   cd weather-app
+   ```
+
+3. Get Dependencies
+   Run the following command to get the dependencies required for the project:
+
+   ```
+   flutter pub get
+   ```
+
+4. Start Emulator or Connect Physical Device
+   Start an emulator or connect a physical device to your computer. Ensure that the device is recognized and properly configured for development.
+
+5. Run the App
+   To run the app on the connected device or emulator, use the following command:
+
+   ```
+   flutter run
+   ```
+
+    This command will build the Flutter app and deploy it to the connected device or emulator. You should see the app running shortly after the build process completes.
