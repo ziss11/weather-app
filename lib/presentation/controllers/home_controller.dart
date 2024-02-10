@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/common/constants.dart';
+import 'package:weather_app/common/result_state.dart';
 import 'package:weather_app/data/datasources/weather_remote_datasource.dart';
-import 'package:weather_app/data/models/result_state.dart';
 import 'package:weather_app/data/models/weather_location_model.dart';
 
 class HomeController extends GetxController with WidgetsBindingObserver {
