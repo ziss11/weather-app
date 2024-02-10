@@ -21,7 +21,7 @@ _$WeatherResponseImpl _$$WeatherResponseImplFromJson(
 Map<String, dynamic> _$$WeatherResponseImplToJson(
         _$WeatherResponseImpl instance) =>
     <String, dynamic>{
-      'current': instance.current,
-      'hourly': instance.hourly,
-      'daily': instance.daily,
+      'current': instance.current.toJson(),
+      'hourly': instance.hourly.map((e) => e.toJson()).toList(),
+      'daily': instance.daily.map((e) => e.toJson()).toList(),
     };
