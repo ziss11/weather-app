@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
 import 'package:weather_app/common/constants.dart';
-import 'package:weather_app/controllers/home_controller.dart';
+import 'package:weather_app/common/utilities.dart';
+import 'package:weather_app/data/models/weather_daily_model.dart';
+import 'package:weather_app/data/models/weather_model.dart';
+import 'package:weather_app/presentation/controllers/home_controller.dart';
 import 'package:weather_app/presentation/widgets/weather_card.dart';
 import 'package:weather_app/presentation/widgets/weather_tile.dart';
 
@@ -31,25 +34,76 @@ class HomePage extends GetView<HomeController> {
           backgroundColor: Colors.transparent,
           appBar: _appBar(),
           body: SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _weatherHeader(),
-                      const Gap(30),
-                      _additionalParameters(),
-                      const Gap(16),
-                      _weatherToday(),
-                      const Gap(16),
-                      _forecastWeather(),
-                    ],
-                  ),
-                ),
+            child: Obx(
+              () => controller.state.value.map(
+                initial: (value) {
+                  return const Center(
+                    child: Text(
+                      'No Data',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: AppFontWeights.medium,
+                      ),
+                    ),
+                  );
+                },
+                loading: (value) {
+                  return Center(
+                    child: CircularProgressIndicator.adaptive(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        (controller.isNight.value)
+                            ? AppColors.lightBlue
+                            : AppColors.white,
+                      ),
+                    ),
+                  );
+                },
+                loaded: (value) {
+                  final weather = value.data.weather;
+                  return SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 20),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _weatherHeader(
+                              weather: weather.current,
+                            ),
+                            const Gap(30),
+                            _additionalParameters(
+                              weather: weather.current,
+                            ),
+                            const Gap(16),
+                            _weatherToday(
+                              millisecondsSinceEpoch: weather.current.date,
+                              weathers: weather.hourly,
+                            ),
+                            const Gap(16),
+                            _forecastWeather(
+                              weathers: weather.daily,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                error: (value) {
+                  return Center(
+                    child: Text(
+                      value.message,
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: AppFontWeights.medium,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -100,6 +154,17 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
+  Widget _locationText({required String text}) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: AppColors.white,
+        fontSize: 16,
+        fontWeight: AppFontWeights.medium,
+      ),
+    );
+  }
+
   PreferredSize _appBar() {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60),
@@ -115,12 +180,22 @@ class HomePage extends GetView<HomeController> {
               fit: BoxFit.scaleDown,
             ),
             const Gap(8),
-            const Text(
-              'Surabaya',
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 16,
-                fontWeight: AppFontWeights.medium,
+            Obx(
+              () => controller.state.value.map(
+                initial: (value) {
+                  return _locationText(text: '-');
+                },
+                loading: (value) {
+                  return _locationText(text: '-');
+                },
+                loaded: (value) {
+                  return _locationText(
+                    text: value.data.location.name,
+                  );
+                },
+                error: (value) {
+                  return _locationText(text: '-');
+                },
               ),
             ),
             const Spacer(),
@@ -180,82 +255,70 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget _weatherHeader() {
+  Widget _weatherHeader({required WeatherModel weather}) {
+    final dateTime = Utilities.unixToDate(weather.date);
+    final formattedTime = DateFormat('HH:mm').format(dateTime);
     return Column(
       children: [
-        SvgPicture.asset(
-          'assets/images/sunny.svg',
-          fit: BoxFit.scaleDown,
-          width: 120,
-          height: 120,
+        Obx(
+          () => SvgPicture.asset(
+            Utilities.getWeatherIcon(
+              weather.weather[0].description,
+              controller.isNight.value,
+            ),
+            fit: BoxFit.scaleDown,
+            width: 120,
+            height: 120,
+          ),
         ),
-        const Gap(16),
-        const Text(
-          '30º',
-          style: TextStyle(
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            '${weather.temp.floor()}º',
+            style: const TextStyle(
+              color: AppColors.white,
+              fontSize: 72,
+              fontWeight: AppFontWeights.regular,
+            ),
+          ),
+        ),
+        Text(
+          weather.weather[0].main,
+          style: const TextStyle(
             color: AppColors.white,
-            fontSize: 52,
+            fontSize: 20,
             fontWeight: AppFontWeights.medium,
           ),
         ),
-        const Text(
-          'Precipitations',
-          style: TextStyle(
-            color: AppColors.white,
-            fontSize: 18,
-          ),
-        ),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Max.: 31º',
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-              ),
-            ),
-            Gap(6),
-            Text(
-              'Min.: 25º',
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-        const Gap(16),
+        const Gap(8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Last updated: 16:00',
-              style: TextStyle(
+            Text(
+              'Last updated: $formattedTime',
+              style: const TextStyle(
                 color: AppColors.white,
                 fontSize: 14,
               ),
             ),
-            const Gap(4),
-            Obx(
-              () => IconButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                style: IconButton.styleFrom(
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            const Gap(8),
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              style: IconButton.styleFrom(
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              onPressed: controller.fetchWeather,
+              icon: ColorFiltered(
+                colorFilter: const ColorFilter.mode(
+                  AppColors.white,
+                  BlendMode.srcATop,
                 ),
-                onPressed: controller.onRefresh,
-                icon: ColorFiltered(
-                  colorFilter: const ColorFilter.mode(
-                    AppColors.white,
-                    BlendMode.srcATop,
-                  ),
-                  child: Lottie.asset(
-                    'assets/lotties/refresh_icon.json',
-                    animate: controller.isRefresh.value,
-                    width: 22,
-                    height: 22,
-                  ),
+                child: SvgPicture.asset(
+                  'assets/icons/ic_refresh.svg',
+                  width: 13,
+                  height: 13,
+                  fit: BoxFit.scaleDown,
                 ),
               ),
             ),
@@ -265,7 +328,19 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget _weatherToday() {
+  Widget _weatherToday({
+    required int millisecondsSinceEpoch,
+    required List<WeatherModel> weathers,
+  }) {
+    final dateTime = Utilities.unixToDate(millisecondsSinceEpoch);
+    final formattedDate = DateFormat('MMM, d').format(dateTime);
+
+    final todayWeathers = weathers.where((weather) {
+      final todayDateTime = Utilities.unixToDate(weather.date);
+      final formattedTodayDate = DateFormat('MMM, d').format(todayDateTime);
+      return formattedTodayDate == formattedDate;
+    }).toList();
+
     return Obx(
       () => Container(
         width: Get.width,
@@ -284,14 +359,14 @@ class HomePage extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Today',
                     style: TextStyle(
                       color: AppColors.white,
@@ -300,8 +375,8 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   Text(
-                    'Mar, 9',
-                    style: TextStyle(
+                    formattedDate,
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 14,
                     ),
@@ -318,13 +393,14 @@ class HomePage extends GetView<HomeController> {
               ),
             ),
             SizedBox(
-              height: 130,
+              height: 115,
               child: ListView.builder(
-                itemCount: 7,
+                itemCount: todayWeathers.length,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return const WeatherCard();
+                  final weather = todayWeathers[index];
+                  return WeatherCard(weather: weather);
                 },
               ),
             ),
@@ -334,7 +410,7 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget _forecastWeather() {
+  Widget _forecastWeather({required List<WeatherDailyModel> weathers}) {
     return Obx(
       () => Container(
         width: Get.width,
@@ -375,14 +451,15 @@ class HomePage extends GetView<HomeController> {
             SizedBox(
               child: ListView.separated(
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: weathers.length,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 separatorBuilder: (context, index) => const Divider(
                   color: AppColors.lightBlue,
                 ),
                 itemBuilder: (context, index) {
-                  return const WeatherTile();
+                  final weather = weathers[index];
+                  return DailyWeatherTile(weather: weather);
                 },
               ),
             ),
@@ -410,7 +487,7 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget _additionalParameters() {
+  Widget _additionalParameters({required WeatherModel weather}) {
     return Obx(
       () => Container(
         margin: const EdgeInsets.symmetric(
@@ -427,19 +504,15 @@ class HomePage extends GetView<HomeController> {
               : AppColors.darkBlue.withOpacity(.2),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _parameterItem(
-              icon: SvgPicture.asset('assets/icons/ic_rain.svg'),
-              value: '6%',
-            ),
-            _parameterItem(
               icon: SvgPicture.asset('assets/icons/ic_feels_like.svg'),
-              value: '90%',
+              value: '${weather.feelsLike.floor()}%',
             ),
             _parameterItem(
               icon: SvgPicture.asset('assets/icons/ic_humidity.svg'),
-              value: '19 km/h',
+              value: '${weather.humidity} km/h',
             ),
           ],
         ),

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
+import 'package:weather_app/common/utilities.dart';
+import 'package:weather_app/data/models/weather_daily_model.dart';
 
-class WeatherTile extends StatelessWidget {
-  const WeatherTile({super.key});
+class DailyWeatherTile extends StatelessWidget {
+  final WeatherDailyModel weather;
+
+  const DailyWeatherTile({
+    super.key,
+    required this.weather,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final dateTime = Utilities.unixToDate(weather.date);
+    final formattedDate = DateFormat('EEEE').format(dateTime);
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 4,
@@ -16,9 +26,9 @@ class WeatherTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Monday',
-            style: TextStyle(
+          Text(
+            formattedDate,
+            style: const TextStyle(
               color: AppColors.white,
               fontSize: 14,
               fontWeight: AppFontWeights.medium,
@@ -26,15 +36,17 @@ class WeatherTile extends StatelessWidget {
           ),
           const Spacer(),
           SvgPicture.asset(
-            'assets/images/cloudy.svg',
+            Utilities.getWeatherIcon(
+              weather.weather[0].description,
+            ),
             fit: BoxFit.scaleDown,
             width: 34,
             height: 25,
           ),
-          const Spacer(),
-          const Text(
-            '28°C',
-            style: TextStyle(
+          const Gap(24),
+          Text(
+            '${weather.temp.day.floor()}°C',
+            style: const TextStyle(
               color: AppColors.white,
               fontSize: 14,
             ),
@@ -45,9 +57,9 @@ class WeatherTile extends StatelessWidget {
             color: AppColors.white,
           ),
           const Gap(16),
-          const Text(
-            '31°C',
-            style: TextStyle(
+          Text(
+            '${weather.feelsLike.day.floor()}°C',
+            style: const TextStyle(
               color: AppColors.white,
               fontSize: 14,
             ),
