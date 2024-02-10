@@ -1,19 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weather_app/data/models/city_model.dart';
 
+import '../dummy_data/dummy_objects.dart';
+
 void main() {
-  final tCityJson = {
-    'name': 'name',
-    'lat': 1.0,
-    'lon': 1.0,
-  };
-
-  const tCityModel = CityModel(
-    name: 'name',
-    lat: 1.0,
-    lon: 1.0,
-  );
-
   test('should return a valid model from JSON', () async {
     // arrange
     final Map<String, dynamic> jsonMap = tCityJson;

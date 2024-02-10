@@ -1,21 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weather_app/data/models/weather_detail_model.dart';
 
+import '../dummy_data/dummy_objects.dart';
+
 void main() {
-  final tWeatherDetailJson = {
-    'id': 1,
-    'main': 'main',
-    'description': 'description',
-    'icon': 'icon',
-  };
-
-  const tWeatherDetailModel = WeatherDetailModel(
-    id: 1,
-    main: 'main',
-    description: 'description',
-    icon: 'icon',
-  );
-
   test('should return a valid model from JSON', () {
     // arrange
     final Map<String, dynamic> jsonMap = tWeatherDetailJson;

@@ -17,6 +17,6 @@ _$WeatherLocationModelImpl _$$WeatherLocationModelImplFromJson(
 Map<String, dynamic> _$$WeatherLocationModelImplToJson(
         _$WeatherLocationModelImpl instance) =>
     <String, dynamic>{
-      'location': instance.location,
-      'weather': instance.weather,
+      'location': instance.location.toJson(),
+      'weather': instance.weather.toJson(),
     };

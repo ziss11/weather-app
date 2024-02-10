@@ -131,7 +131,8 @@ class __$$WeatherLocationModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$WeatherLocationModelImpl implements _WeatherLocationModel {
   const _$WeatherLocationModelImpl(
       {required this.location, required this.weather});
