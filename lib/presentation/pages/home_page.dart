@@ -393,7 +393,7 @@ class HomePage extends GetView<HomeController> {
               ),
             ),
             SizedBox(
-              height: 115,
+              height: 110,
               child: ListView.builder(
                 itemCount: todayWeathers.length,
                 scrollDirection: Axis.horizontal,

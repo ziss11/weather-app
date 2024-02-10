@@ -37,13 +37,15 @@ class WeatherCard extends StatelessWidget {
                 : formattedTime,
             style: const TextStyle(
               fontWeight: AppFontWeights.medium,
-              fontSize: 16,
+              fontSize: 14,
               color: AppColors.white,
             ),
           ),
           const Gap(8),
           SvgPicture.asset(
-            'assets/images/few_clouds_day.svg',
+            Utilities.getWeatherIcon(
+              weather.weather[0].description,
+            ),
             fit: BoxFit.scaleDown,
             width: 34,
             height: 25,
@@ -52,7 +54,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             '${weather.temp.floor()}°C',
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: AppColors.white,
               fontWeight: AppFontWeights.medium,
             ),

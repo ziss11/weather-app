@@ -21,6 +21,7 @@ TempModel _$TempModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TempModel {
   double get day => throw _privateConstructorUsedError;
+  double get night => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $TempModelCopyWith<$Res> {
   factory $TempModelCopyWith(TempModel value, $Res Function(TempModel) then) =
       _$TempModelCopyWithImpl<$Res, TempModel>;
   @useResult
-  $Res call({double day});
+  $Res call({double day, double night});
 }
 
 /// @nodoc
@@ -50,11 +51,16 @@ class _$TempModelCopyWithImpl<$Res, $Val extends TempModel>
   @override
   $Res call({
     Object? day = null,
+    Object? night = null,
   }) {
     return _then(_value.copyWith(
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
+              as double,
+      night: null == night
+          ? _value.night
+          : night // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -68,7 +74,7 @@ abstract class _$$TempModelImplCopyWith<$Res>
       __$$TempModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double day});
+  $Res call({double day, double night});
 }
 
 /// @nodoc
@@ -83,11 +89,16 @@ class __$$TempModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? day = null,
+    Object? night = null,
   }) {
     return _then(_$TempModelImpl(
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
+              as double,
+      night: null == night
+          ? _value.night
+          : night // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -96,17 +107,19 @@ class __$$TempModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TempModelImpl implements _TempModel {
-  const _$TempModelImpl({required this.day});
+  const _$TempModelImpl({required this.day, required this.night});
 
   factory _$TempModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TempModelImplFromJson(json);
 
   @override
   final double day;
+  @override
+  final double night;
 
   @override
   String toString() {
-    return 'TempModel(day: $day)';
+    return 'TempModel(day: $day, night: $night)';
   }
 
   @override
@@ -114,12 +127,13 @@ class _$TempModelImpl implements _TempModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TempModelImpl &&
-            (identical(other.day, day) || other.day == day));
+            (identical(other.day, day) || other.day == day) &&
+            (identical(other.night, night) || other.night == night));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, day);
+  int get hashCode => Object.hash(runtimeType, day, night);
 
   @JsonKey(ignore: true)
   @override
@@ -136,13 +150,17 @@ class _$TempModelImpl implements _TempModel {
 }
 
 abstract class _TempModel implements TempModel {
-  const factory _TempModel({required final double day}) = _$TempModelImpl;
+  const factory _TempModel(
+      {required final double day,
+      required final double night}) = _$TempModelImpl;
 
   factory _TempModel.fromJson(Map<String, dynamic> json) =
       _$TempModelImpl.fromJson;
 
   @override
   double get day;
+  @override
+  double get night;
   @override
   @JsonKey(ignore: true)
   _$$TempModelImplCopyWith<_$TempModelImpl> get copyWith =>

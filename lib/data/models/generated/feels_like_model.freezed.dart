@@ -21,6 +21,7 @@ FeelsLikeModel _$FeelsLikeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FeelsLikeModel {
   double get day => throw _privateConstructorUsedError;
+  double get night => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $FeelsLikeModelCopyWith<$Res> {
           FeelsLikeModel value, $Res Function(FeelsLikeModel) then) =
       _$FeelsLikeModelCopyWithImpl<$Res, FeelsLikeModel>;
   @useResult
-  $Res call({double day});
+  $Res call({double day, double night});
 }
 
 /// @nodoc
@@ -51,11 +52,16 @@ class _$FeelsLikeModelCopyWithImpl<$Res, $Val extends FeelsLikeModel>
   @override
   $Res call({
     Object? day = null,
+    Object? night = null,
   }) {
     return _then(_value.copyWith(
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
+              as double,
+      night: null == night
+          ? _value.night
+          : night // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -69,7 +75,7 @@ abstract class _$$FeelsLikeModelImplCopyWith<$Res>
       __$$FeelsLikeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double day});
+  $Res call({double day, double night});
 }
 
 /// @nodoc
@@ -84,11 +90,16 @@ class __$$FeelsLikeModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? day = null,
+    Object? night = null,
   }) {
     return _then(_$FeelsLikeModelImpl(
       day: null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
+              as double,
+      night: null == night
+          ? _value.night
+          : night // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -97,17 +108,19 @@ class __$$FeelsLikeModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FeelsLikeModelImpl implements _FeelsLikeModel {
-  const _$FeelsLikeModelImpl({required this.day});
+  const _$FeelsLikeModelImpl({required this.day, required this.night});
 
   factory _$FeelsLikeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FeelsLikeModelImplFromJson(json);
 
   @override
   final double day;
+  @override
+  final double night;
 
   @override
   String toString() {
-    return 'FeelsLikeModel(day: $day)';
+    return 'FeelsLikeModel(day: $day, night: $night)';
   }
 
   @override
@@ -115,12 +128,13 @@ class _$FeelsLikeModelImpl implements _FeelsLikeModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FeelsLikeModelImpl &&
-            (identical(other.day, day) || other.day == day));
+            (identical(other.day, day) || other.day == day) &&
+            (identical(other.night, night) || other.night == night));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, day);
+  int get hashCode => Object.hash(runtimeType, day, night);
 
   @JsonKey(ignore: true)
   @override
@@ -138,14 +152,17 @@ class _$FeelsLikeModelImpl implements _FeelsLikeModel {
 }
 
 abstract class _FeelsLikeModel implements FeelsLikeModel {
-  const factory _FeelsLikeModel({required final double day}) =
-      _$FeelsLikeModelImpl;
+  const factory _FeelsLikeModel(
+      {required final double day,
+      required final double night}) = _$FeelsLikeModelImpl;
 
   factory _FeelsLikeModel.fromJson(Map<String, dynamic> json) =
       _$FeelsLikeModelImpl.fromJson;
 
   @override
   double get day;
+  @override
+  double get night;
   @override
   @JsonKey(ignore: true)
   _$$FeelsLikeModelImplCopyWith<_$FeelsLikeModelImpl> get copyWith =>

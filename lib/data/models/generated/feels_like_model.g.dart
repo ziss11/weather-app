@@ -9,10 +9,12 @@ part of '../feels_like_model.dart';
 _$FeelsLikeModelImpl _$$FeelsLikeModelImplFromJson(Map<String, dynamic> json) =>
     _$FeelsLikeModelImpl(
       day: (json['day'] as num).toDouble(),
+      night: (json['night'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$FeelsLikeModelImplToJson(
         _$FeelsLikeModelImpl instance) =>
     <String, dynamic>{
       'day': instance.day,
+      'night': instance.night,
     };

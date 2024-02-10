@@ -7,6 +7,7 @@ part 'generated/temp_model.g.dart';
 class TempModel with _$TempModel {
   const factory TempModel({
     required double day,
+    required double night,
   }) = _TempModel;
 
   factory TempModel.fromJson(Map<String, Object?> json) =>

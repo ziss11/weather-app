@@ -7,6 +7,7 @@ part 'generated/feels_like_model.g.dart';
 class FeelsLikeModel with _$FeelsLikeModel {
   const factory FeelsLikeModel({
     required double day,
+    required double night,
   }) = _FeelsLikeModel;
 
   factory FeelsLikeModel.fromJson(Map<String, Object?> json) =>
