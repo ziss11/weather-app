@@ -1,0 +1,101 @@
+{
+    "lat": 1.0,
+    "lon": 1.0,
+    "timezone": "Asia/Jakarta",
+    "timezone_offset": 1,
+    "current": {
+        "dt": 1,
+        "sunrise": 1,
+        "sunset": 1,
+        "temp": 1.0,
+        "feels_like": 1.0,
+        "pressure": 1,
+        "humidity": 1,
+        "dew_point": 1.0,
+        "uvi": 1.0,
+        "clouds": 1,
+        "visibility": 1,
+        "wind_speed": 1.0,
+        "wind_deg": 1,
+        "wind_gust": 1.0,
+        "weather": [
+            {
+                "id": 1,
+                "main": "main",
+                "description": "description",
+                "icon": "icon"
+            }
+        ],
+        "rain": {
+            "1h": 1.0
+        }
+    },
+    "hourly": [
+        {
+            "dt": 1,
+            "temp": 1.0,
+            "feels_like": 1.0,
+            "pressure": 1,
+            "humidity": 1,
+            "dew_point": 1.0,
+            "uvi": 1.0,
+            "clouds": 1,
+            "visibility": 1,
+            "wind_speed": 1.0,
+            "wind_deg": 1,
+            "wind_gust": 1.0,
+            "weather": [
+                {
+                    "id": 1,
+                    "main": "main",
+                    "description": "description",
+                    "icon": "icon"
+                }
+            ],
+            "pop": 1.0
+        }
+    ],
+    "daily": [
+        {
+            "dt": 1,
+            "sunrise": 1,
+            "sunset": 1,
+            "moonrise": 1,
+            "moonset": 1,
+            "moon_phase": 1.0,
+            "summary": "Expect a day of partly cloudy with rain",
+            "temp": {
+                "day": 1.0,
+                "min": 1.0,
+                "max": 1.0,
+                "night": 1.0,
+                "eve": 1.0,
+                "morn": 1.0
+            },
+            "feels_like": {
+                "day": 1.0,
+                "night": 1.0,
+                "eve": 1.0,
+                "morn": 1
+            },
+            "pressure": 1,
+            "humidity": 1,
+            "dew_point": 1.0,
+            "wind_speed": 1.0,
+            "wind_deg": 1,
+            "wind_gust": 1.0,
+            "weather": [
+                {
+                    "id": 1,
+                    "main": "main",
+                    "description": "description",
+                    "icon": "icon"
+                }
+            ],
+            "clouds": 1,
+            "pop": 1,
+            "rain": 1.0,
+            "uvi": 1.0
+        }
+    ]
+}
