@@ -151,7 +151,8 @@ class __$$WeatherModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$WeatherModelImpl implements _WeatherModel {
   const _$WeatherModelImpl(
       {@JsonKey(name: 'dt') required this.date,

@@ -23,5 +23,5 @@ Map<String, dynamic> _$$WeatherModelImplToJson(_$WeatherModelImpl instance) =>
       'temp': instance.temp,
       'feels_like': instance.feelsLike,
       'humidity': instance.humidity,
-      'weather': instance.weather,
+      'weather': instance.weather.map((e) => e.toJson()).toList(),
     };
