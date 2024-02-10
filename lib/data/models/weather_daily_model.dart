@@ -10,6 +10,7 @@ part 'generated/weather_daily_model.g.dart';
 
 @freezed
 class WeatherDailyModel with _$WeatherDailyModel {
+  @JsonSerializable(explicitToJson: true)
   const factory WeatherDailyModel({
     @JsonKey(name: 'dt') required int date,
     required TempModel temp,

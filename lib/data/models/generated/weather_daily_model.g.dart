@@ -23,8 +23,8 @@ Map<String, dynamic> _$$WeatherDailyModelImplToJson(
         _$WeatherDailyModelImpl instance) =>
     <String, dynamic>{
       'dt': instance.date,
-      'temp': instance.temp,
-      'feels_like': instance.feelsLike,
+      'temp': instance.temp.toJson(),
+      'feels_like': instance.feelsLike.toJson(),
       'humidity': instance.humidity,
-      'weather': instance.weather,
+      'weather': instance.weather.map((e) => e.toJson()).toList(),
     };
