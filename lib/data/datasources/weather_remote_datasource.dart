@@ -9,7 +9,10 @@ import 'package:weather_app/data/models/weather_response.dart';
 abstract class WeatherRemoteDataSource {
   Future<Either<Failure, CityModel>> getLocation(String city);
   Future<Either<Failure, WeatherResponse>> getWeather(
-      double latitude, double longitude);
+    double latitude,
+    double longitude,
+    String units,
+  );
 }
 
 class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
@@ -39,11 +42,12 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
   Future<Either<Failure, WeatherResponse>> getWeather(
     double latitude,
     double longitude,
+    String units,
   ) async {
     final params = {
       'lat': latitude,
       'lon': longitude,
-      'units': 'metric',
+      'units': units,
       'exclude': 'minutely',
       'appid': dotenv.env['WEATHER_API_KEY'],
     };

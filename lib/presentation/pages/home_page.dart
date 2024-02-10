@@ -209,7 +209,7 @@ class HomePage extends GetView<HomeController> {
                 position: PopupMenuPosition.under,
                 iconColor: AppColors.white,
                 onSelected: (value) {
-                  controller.tempUnit.value = value;
+                  controller.setTempUnit(value);
                 },
                 child: const Icon(
                   Icons.more_vert,
@@ -219,7 +219,7 @@ class HomePage extends GetView<HomeController> {
                   return [
                     _popUpMenuItem<String>(
                       title: 'Celcius',
-                      value: Constants.celcius,
+                      value: Constants.metricUnit,
                       suffix: Text(
                         'Cº',
                         style: TextStyle(
@@ -233,7 +233,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                     _popUpMenuItem<String>(
                       title: 'Fahrenheit',
-                      value: Constants.fahrenheit,
+                      value: Constants.imperialUnit,
                       suffix: Text(
                         'Fº',
                         style: TextStyle(
@@ -258,6 +258,7 @@ class HomePage extends GetView<HomeController> {
   Widget _weatherHeader({required WeatherModel weather}) {
     final dateTime = Utilities.unixToDate(weather.date);
     final formattedTime = DateFormat('HH:mm').format(dateTime);
+
     return Column(
       children: [
         Obx(
@@ -335,11 +336,13 @@ class HomePage extends GetView<HomeController> {
     final dateTime = Utilities.unixToDate(millisecondsSinceEpoch);
     final formattedDate = DateFormat('MMM, d').format(dateTime);
 
-    final todayWeathers = weathers.where((weather) {
-      final todayDateTime = Utilities.unixToDate(weather.date);
-      final formattedTodayDate = DateFormat('MMM, d').format(todayDateTime);
-      return formattedTodayDate == formattedDate;
-    }).toList();
+    final todayWeathers = weathers.where(
+      (weather) {
+        final todayDateTime = Utilities.unixToDate(weather.date);
+        final formattedTodayDate = DateFormat('MMM, d').format(todayDateTime);
+        return formattedTodayDate == formattedDate;
+      },
+    ).toList();
 
     return Obx(
       () => Container(

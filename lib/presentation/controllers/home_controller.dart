@@ -13,7 +13,7 @@ class HomeController extends GetxController with WidgetsBindingObserver {
   }
 
   final isNight = false.obs;
-  final tempUnit = Constants.celcius.obs;
+  final tempUnit = Constants.metricUnit.obs;
 
   final state = Rx<ResultState<WeatherLocationModel>>(
     const ResultState.initial(),
@@ -50,9 +50,10 @@ class HomeController extends GetxController with WidgetsBindingObserver {
 
   void setTempUnit(String tempUnit) {
     this.tempUnit.value = tempUnit;
+    fetchWeather(units: tempUnit);
   }
 
-  void fetchWeather() async {
+  void fetchWeather({String units = Constants.metricUnit}) async {
     state.value = const ResultState.loading();
 
     final locationResult = await _remoteDataSource.getLocation('surabaya');
@@ -65,6 +66,7 @@ class HomeController extends GetxController with WidgetsBindingObserver {
         final weatherResult = await _remoteDataSource.getWeather(
           locatioData.lat,
           locatioData.lon,
+          units,
         );
 
         weatherResult.fold(
@@ -81,6 +83,5 @@ class HomeController extends GetxController with WidgetsBindingObserver {
         );
       },
     );
-    Future.delayed(const Duration(seconds: 3), () {});
   }
 }
