@@ -36,8 +36,6 @@ class HomeController extends GetxController with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    debugPrint(state.toString());
-
     if (state == AppLifecycleState.resumed) {
       _checkIsNight();
     }
@@ -50,10 +48,10 @@ class HomeController extends GetxController with WidgetsBindingObserver {
 
   void setTempUnit(String tempUnit) {
     this.tempUnit.value = tempUnit;
-    fetchWeather(units: tempUnit);
+    fetchWeather();
   }
 
-  void fetchWeather({String units = Constants.metricUnit}) async {
+  void fetchWeather() async {
     state.value = const ResultState.loading();
 
     final locationResult = await _remoteDataSource.getLocation('surabaya');
@@ -66,7 +64,7 @@ class HomeController extends GetxController with WidgetsBindingObserver {
         final weatherResult = await _remoteDataSource.getWeather(
           locatioData.lat,
           locatioData.lon,
-          units,
+          tempUnit.value,
         );
 
         weatherResult.fold(

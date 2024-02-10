@@ -10,6 +10,7 @@ import 'package:weather_app/common/utilities.dart';
 import 'package:weather_app/data/models/weather_daily_model.dart';
 import 'package:weather_app/data/models/weather_model.dart';
 import 'package:weather_app/presentation/controllers/home_controller.dart';
+import 'package:weather_app/presentation/widgets/refresh_layout.dart';
 import 'package:weather_app/presentation/widgets/weather_card.dart';
 import 'package:weather_app/presentation/widgets/weather_tile.dart';
 
@@ -37,13 +38,19 @@ class HomePage extends GetView<HomeController> {
             child: Obx(
               () => controller.state.value.map(
                 initial: (value) {
-                  return const Center(
-                    child: Text(
-                      'No Data',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 16,
-                        fontWeight: AppFontWeights.medium,
+                  return RefreshLayout(
+                    color: (controller.isNight.value)
+                        ? AppColors.darkBlue
+                        : AppColors.lightBlue,
+                    onRefresh: controller.fetchWeather,
+                    child: const Center(
+                      child: Text(
+                        'No Data',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                          fontWeight: AppFontWeights.medium,
+                        ),
                       ),
                     ),
                   );
@@ -93,13 +100,19 @@ class HomePage extends GetView<HomeController> {
                   );
                 },
                 error: (value) {
-                  return Center(
-                    child: Text(
-                      value.message,
-                      style: const TextStyle(
-                        color: AppColors.white,
-                        fontSize: 16,
-                        fontWeight: AppFontWeights.medium,
+                  return RefreshLayout(
+                    color: (controller.isNight.value)
+                        ? AppColors.darkBlue
+                        : AppColors.lightBlue,
+                    onRefresh: controller.fetchWeather,
+                    child: Center(
+                      child: Text(
+                        value.message,
+                        style: const TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                          fontWeight: AppFontWeights.medium,
+                        ),
                       ),
                     ),
                   );
