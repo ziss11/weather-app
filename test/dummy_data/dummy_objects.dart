@@ -32,11 +32,15 @@ const tFeelsLikeModel = FeelsLikeModel(
 final tTempJson = {
   'day': 1.0,
   'night': 1.0,
+  'min': 1.0,
+  'max': 1.0,
 };
 
 const tTempModel = TempModel(
   day: 1.0,
   night: 1.0,
+  min: 1.0,
+  max: 1.0,
 );
 
 final tWeatherDetailJson = {

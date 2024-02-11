@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/common/app_colors.dart';
 import 'package:weather_app/common/app_font_weights.dart';
+import 'package:weather_app/common/constants.dart';
 import 'package:weather_app/common/utilities.dart';
 import 'package:weather_app/data/models/weather_daily_model.dart';
 import 'package:weather_app/presentation/controllers/home_controller.dart';
@@ -50,9 +51,9 @@ class DailyWeatherTile extends StatelessWidget {
           ),
           const Gap(24),
           Text(
-            (homeController.isNight.value)
-                ? '${weather.temp.night.floor()}°C'
-                : '${weather.temp.day.floor()}°C',
+            (homeController.tempUnit.value == Constants.metricUnit)
+                ? '${weather.temp.min.floor()}°C'
+                : '${weather.temp.min.floor()}°F',
             style: const TextStyle(
               color: AppColors.white,
               fontWeight: AppFontWeights.medium,
@@ -66,9 +67,9 @@ class DailyWeatherTile extends StatelessWidget {
           ),
           const Gap(16),
           Text(
-            (homeController.isNight.value)
-                ? '${weather.feelsLike.night.floor()}°C'
-                : '${weather.feelsLike.day.floor()}°C',
+            (homeController.tempUnit.value == Constants.metricUnit)
+                ? '${weather.temp.max.floor()}°C'
+                : '${weather.temp.max.floor()}°F',
             style: const TextStyle(
               color: AppColors.white,
               fontWeight: AppFontWeights.medium,

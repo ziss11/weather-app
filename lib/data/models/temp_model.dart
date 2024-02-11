@@ -8,6 +8,8 @@ class TempModel with _$TempModel {
   const factory TempModel({
     required double day,
     required double night,
+    required double min,
+    required double max,
   }) = _TempModel;
 
   factory TempModel.fromJson(Map<String, Object?> json) =>
