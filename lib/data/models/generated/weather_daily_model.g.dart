@@ -11,8 +11,6 @@ _$WeatherDailyModelImpl _$$WeatherDailyModelImplFromJson(
     _$WeatherDailyModelImpl(
       date: json['dt'] as int,
       temp: TempModel.fromJson(json['temp'] as Map<String, dynamic>),
-      feelsLike:
-          FeelsLikeModel.fromJson(json['feels_like'] as Map<String, dynamic>),
       humidity: json['humidity'] as int,
       weather: (json['weather'] as List<dynamic>)
           .map((e) => WeatherDetailModel.fromJson(e as Map<String, dynamic>))
@@ -24,7 +22,6 @@ Map<String, dynamic> _$$WeatherDailyModelImplToJson(
     <String, dynamic>{
       'dt': instance.date,
       'temp': instance.temp.toJson(),
-      'feels_like': instance.feelsLike.toJson(),
       'humidity': instance.humidity,
       'weather': instance.weather.map((e) => e.toJson()).toList(),
     };

@@ -23,8 +23,6 @@ mixin _$WeatherDailyModel {
   @JsonKey(name: 'dt')
   int get date => throw _privateConstructorUsedError;
   TempModel get temp => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feels_like')
-  FeelsLikeModel get feelsLike => throw _privateConstructorUsedError;
   int get humidity => throw _privateConstructorUsedError;
   List<WeatherDetailModel> get weather => throw _privateConstructorUsedError;
 
@@ -43,12 +41,10 @@ abstract class $WeatherDailyModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'dt') int date,
       TempModel temp,
-      @JsonKey(name: 'feels_like') FeelsLikeModel feelsLike,
       int humidity,
       List<WeatherDetailModel> weather});
 
   $TempModelCopyWith<$Res> get temp;
-  $FeelsLikeModelCopyWith<$Res> get feelsLike;
 }
 
 /// @nodoc
@@ -66,7 +62,6 @@ class _$WeatherDailyModelCopyWithImpl<$Res, $Val extends WeatherDailyModel>
   $Res call({
     Object? date = null,
     Object? temp = null,
-    Object? feelsLike = null,
     Object? humidity = null,
     Object? weather = null,
   }) {
@@ -79,10 +74,6 @@ class _$WeatherDailyModelCopyWithImpl<$Res, $Val extends WeatherDailyModel>
           ? _value.temp
           : temp // ignore: cast_nullable_to_non_nullable
               as TempModel,
-      feelsLike: null == feelsLike
-          ? _value.feelsLike
-          : feelsLike // ignore: cast_nullable_to_non_nullable
-              as FeelsLikeModel,
       humidity: null == humidity
           ? _value.humidity
           : humidity // ignore: cast_nullable_to_non_nullable
@@ -101,14 +92,6 @@ class _$WeatherDailyModelCopyWithImpl<$Res, $Val extends WeatherDailyModel>
       return _then(_value.copyWith(temp: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $FeelsLikeModelCopyWith<$Res> get feelsLike {
-    return $FeelsLikeModelCopyWith<$Res>(_value.feelsLike, (value) {
-      return _then(_value.copyWith(feelsLike: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -122,14 +105,11 @@ abstract class _$$WeatherDailyModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'dt') int date,
       TempModel temp,
-      @JsonKey(name: 'feels_like') FeelsLikeModel feelsLike,
       int humidity,
       List<WeatherDetailModel> weather});
 
   @override
   $TempModelCopyWith<$Res> get temp;
-  @override
-  $FeelsLikeModelCopyWith<$Res> get feelsLike;
 }
 
 /// @nodoc
@@ -145,7 +125,6 @@ class __$$WeatherDailyModelImplCopyWithImpl<$Res>
   $Res call({
     Object? date = null,
     Object? temp = null,
-    Object? feelsLike = null,
     Object? humidity = null,
     Object? weather = null,
   }) {
@@ -158,10 +137,6 @@ class __$$WeatherDailyModelImplCopyWithImpl<$Res>
           ? _value.temp
           : temp // ignore: cast_nullable_to_non_nullable
               as TempModel,
-      feelsLike: null == feelsLike
-          ? _value.feelsLike
-          : feelsLike // ignore: cast_nullable_to_non_nullable
-              as FeelsLikeModel,
       humidity: null == humidity
           ? _value.humidity
           : humidity // ignore: cast_nullable_to_non_nullable
@@ -181,7 +156,6 @@ class _$WeatherDailyModelImpl implements _WeatherDailyModel {
   const _$WeatherDailyModelImpl(
       {@JsonKey(name: 'dt') required this.date,
       required this.temp,
-      @JsonKey(name: 'feels_like') required this.feelsLike,
       required this.humidity,
       required final List<WeatherDetailModel> weather})
       : _weather = weather;
@@ -195,9 +169,6 @@ class _$WeatherDailyModelImpl implements _WeatherDailyModel {
   @override
   final TempModel temp;
   @override
-  @JsonKey(name: 'feels_like')
-  final FeelsLikeModel feelsLike;
-  @override
   final int humidity;
   final List<WeatherDetailModel> _weather;
   @override
@@ -209,7 +180,7 @@ class _$WeatherDailyModelImpl implements _WeatherDailyModel {
 
   @override
   String toString() {
-    return 'WeatherDailyModel(date: $date, temp: $temp, feelsLike: $feelsLike, humidity: $humidity, weather: $weather)';
+    return 'WeatherDailyModel(date: $date, temp: $temp, humidity: $humidity, weather: $weather)';
   }
 
   @override
@@ -219,8 +190,6 @@ class _$WeatherDailyModelImpl implements _WeatherDailyModel {
             other is _$WeatherDailyModelImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.temp, temp) || other.temp == temp) &&
-            (identical(other.feelsLike, feelsLike) ||
-                other.feelsLike == feelsLike) &&
             (identical(other.humidity, humidity) ||
                 other.humidity == humidity) &&
             const DeepCollectionEquality().equals(other._weather, _weather));
@@ -228,7 +197,7 @@ class _$WeatherDailyModelImpl implements _WeatherDailyModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, date, temp, feelsLike, humidity,
+  int get hashCode => Object.hash(runtimeType, date, temp, humidity,
       const DeepCollectionEquality().hash(_weather));
 
   @JsonKey(ignore: true)
@@ -250,7 +219,6 @@ abstract class _WeatherDailyModel implements WeatherDailyModel {
   const factory _WeatherDailyModel(
           {@JsonKey(name: 'dt') required final int date,
           required final TempModel temp,
-          @JsonKey(name: 'feels_like') required final FeelsLikeModel feelsLike,
           required final int humidity,
           required final List<WeatherDetailModel> weather}) =
       _$WeatherDailyModelImpl;
@@ -263,9 +231,6 @@ abstract class _WeatherDailyModel implements WeatherDailyModel {
   int get date;
   @override
   TempModel get temp;
-  @override
-  @JsonKey(name: 'feels_like')
-  FeelsLikeModel get feelsLike;
   @override
   int get humidity;
   @override

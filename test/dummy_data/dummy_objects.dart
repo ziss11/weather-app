@@ -1,5 +1,4 @@
 import 'package:weather_app/data/models/city_model.dart';
-import 'package:weather_app/data/models/feels_like_model.dart';
 import 'package:weather_app/data/models/temp_model.dart';
 import 'package:weather_app/data/models/weather_daily_model.dart';
 import 'package:weather_app/data/models/weather_detail_model.dart';
@@ -17,16 +16,6 @@ const tCityModel = CityModel(
   name: 'name',
   lat: 1.0,
   lon: 1.0,
-);
-
-final tFeelsLikeJson = {
-  'day': 1.0,
-  'night': 1.0,
-};
-
-const tFeelsLikeModel = FeelsLikeModel(
-  day: 1.0,
-  night: 1.0,
 );
 
 final tTempJson = {
@@ -70,7 +59,6 @@ final tWeatherJson = {
 const tWeatherModel = WeatherModel(
   date: 1,
   temp: 1.0,
-  feelsLike: 1.0,
   humidity: 1,
   weather: [
     tWeatherDetailModel,
@@ -80,7 +68,6 @@ const tWeatherModel = WeatherModel(
 final tWeatherDailyJson = {
   'dt': 1,
   'temp': tTempJson,
-  'feels_like': tFeelsLikeJson,
   'humidity': 1,
   'weather': [
     tWeatherDetailJson,
@@ -90,7 +77,6 @@ final tWeatherDailyJson = {
 const tWeatherDailyModel = WeatherDailyModel(
   date: 1,
   temp: tTempModel,
-  feelsLike: tFeelsLikeModel,
   humidity: 1,
   weather: [
     tWeatherDetailModel,

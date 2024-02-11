@@ -81,10 +81,6 @@ class HomePage extends GetView<HomeController> {
                               weather: weather.current,
                             ),
                             const Gap(30),
-                            _additionalParameters(
-                              weather: weather.current,
-                            ),
-                            const Gap(16),
                             _weatherToday(
                               millisecondsSinceEpoch: weather.current.date,
                               weathers: weather.hourly,
@@ -484,57 +480,6 @@ class HomePage extends GetView<HomeController> {
                   return DailyWeatherTile(weather: weather);
                 },
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _parameterItem({required Widget icon, required String value}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        icon,
-        const Gap(5),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: AppFontWeights.medium,
-            color: AppColors.white,
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _additionalParameters({required WeatherModel weather}) {
-    return Obx(
-      () => Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30,
-          vertical: 12,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: (controller.isNight.value)
-              ? AppColors.darkerBlue.withOpacity(.4)
-              : AppColors.darkBlue.withOpacity(.2),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _parameterItem(
-              icon: SvgPicture.asset('assets/icons/ic_feels_like.svg'),
-              value: '${weather.feelsLike.floor()}%',
-            ),
-            _parameterItem(
-              icon: SvgPicture.asset('assets/icons/ic_humidity.svg'),
-              value: '${weather.humidity} km/h',
             ),
           ],
         ),
