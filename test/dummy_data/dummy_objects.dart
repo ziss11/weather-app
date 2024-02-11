@@ -49,7 +49,6 @@ const tWeatherDetailModel = WeatherDetailModel(
 final tWeatherJson = {
   'dt': 1,
   'temp': 1.0,
-  'feels_like': 1.0,
   'humidity': 1,
   'weather': [
     tWeatherDetailJson,
@@ -64,7 +63,6 @@ const tWeatherModel = WeatherModel(
     tWeatherDetailModel,
   ],
 );
-
 final tWeatherDailyJson = {
   'dt': 1,
   'temp': tTempJson,
